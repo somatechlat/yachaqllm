@@ -1,0 +1,229 @@
+# Global corpus manifest for Nanochat/YachaQ stack
+# Each entry includes purpose, dataset identifier, size estimate, license, and ingestion notes.
+# This file stays ASCII to simplify parsing inside bootstrap scripts.
+
+meta:
+  version: 1
+  generated: 2025-10-18
+  maintainer: "Yachaq Data Platform"
+  notes: "Verify license terms before adding new sources. Keep attribution logs."
+
+pretraining:
+  - name: "Dolma"
+    dataset_id: "allenai/dolma"
+    approx_tokens: "3T"
+    license: "ODC-BY"
+    priority: "high"
+    ingestion:
+      tooling: "dolma-toolkit"
+      sampling_ratio: 0.35
+      notes: "Filter out duplicated Common Crawl shards already covered by FineWeb."
+  - name: "RefinedWeb"
+    dataset_id: "tiiuae/falcon-refinedweb"
+    approx_tokens: "600B"
+    license: "ODC-BY"
+    priority: "high"
+    ingestion:
+      tooling: "ccnet"
+      sampling_ratio: 0.15
+      notes: "Keep language filter to es/en; drop low quality scores (<0.65)."
+  - name: "FineWeb"
+    dataset_id: "HuggingFaceFW/fineweb"
+    approx_tokens: "15T"
+    license: "ODC-BY"
+    priority: "medium"
+    ingestion:
+      tooling: "ccnet"
+      sampling_ratio: 0.2
+      notes: "Focus on academic and reference domains; enforce MinHash dedup with k=5."
+  - name: "RedPajama"
+    dataset_id: "togethercomputer/RedPajama-Data-V2"
+    approx_tokens: "1T"
+    license: "Mixed"
+    priority: "medium"
+    ingestion:
+      tooling: "huggingface-hub"
+      sampling_ratio: 0.1
+      notes: "Select subsets excluding Books, StackExchange duplicates, and anything with contested licensing."
+  - name: "C4"
+    dataset_id: "c4"
+    approx_tokens: "750B"
+    license: "ODC-BY"
+    priority: "medium"
+    ingestion:
+      tooling: "t5-dataloader"
+      sampling_ratio: 0.05
+      notes: "Use multilingual-es component for Ecuador coverage."
+  - name: "Wikipedia"
+    dataset_id: "wikipedia"
+    approx_tokens: "120B"
+    license: "CC-BY-SA"
+    priority: "high"
+    ingestion:
+      tooling: "wikiextractor"
+      sampling_ratio: 0.05
+      notes: "Include en, es, qu (Quechua) dumps. Preserve page metadata for RAG cross-links."
+  - name: "Project Gutenberg"
+    dataset_id: "project_gutenberg"
+    approx_tokens: "25B"
+    license: "Public Domain"
+    priority: "low"
+    ingestion:
+      tooling: "gutenbergpy"
+      sampling_ratio: 0.02
+      notes: "Restrict to legal, historical, and civic titles relevant to Ecuador."
+  - name: "arXiv-cc"
+    dataset_id: "arxiv_dataset"
+    approx_tokens: "90B"
+    license: "Mixed"
+    priority: "low"
+    ingestion:
+      tooling: "arxiv-bulk"
+      sampling_ratio: 0.03
+      notes: "Keep only CC-BY/CC-BY-SA papers and cite sources in metadata."
+
+code:
+  - name: "The Stack v2"
+    dataset_id: "bigcode/the-stack-dedup"
+    approx_tokens: "1.4T"
+    license: "Permissive OSS"
+    priority: "high"
+    ingestion:
+      tooling: "bigcode-dataloader"
+      sampling_ratio: 0.6
+      notes: "Filter by repo license (MIT/Apache/BSD). Drop GPL to simplify redistribution."
+  - name: "StarCoder2Data"
+    dataset_id: "bigcode/starcoderdata"
+    approx_tokens: "900B"
+    license: "Permissive OSS"
+    priority: "medium"
+    ingestion:
+      tooling: "bigcode-dataloader"
+      sampling_ratio: 0.4
+      notes: "Capture issue and discussion text for conversational fine-tuning."
+
+instruction:
+  - name: "FLAN"
+    dataset_id: "google/flan"
+    approx_examples: 4500000
+    license: "Mixed"
+    priority: "high"
+    ingestion:
+      tooling: "flan-parser"
+      mixing_ratio: 0.4
+      notes: "Maintain task-type balancing across reasoning, translation, and QA."
+  - name: "Super-Natural Instructions"
+    dataset_id: "super_natural_instructions"
+    approx_examples: 321000
+    license: "Apache-2.0"
+    priority: "high"
+    ingestion:
+      tooling: "promptsource"
+      mixing_ratio: 0.2
+      notes: "Use Spanish templates where available; auto-translate missing ones via in-house MT."
+  - name: "P3"
+    dataset_id: "promptsource/p3"
+    approx_examples: 3100000
+    license: "Apache-2.0"
+    priority: "medium"
+    ingestion:
+      tooling: "promptsource"
+      mixing_ratio: 0.15
+      notes: "Drop tasks overlapping with GSM8K to prevent eval leakage."
+  - name: "Dolly-15k"
+    dataset_id: "databricks/databricks-dolly-15k"
+    approx_examples: 15000
+    license: "CC-BY-SA"
+    priority: "medium"
+    ingestion:
+      tooling: "huggingface-hub"
+      mixing_ratio: 0.1
+      notes: "Tag derived outputs with share-alike notice."
+  - name: "OpenOrca"
+    dataset_id: "Open-Orca/OpenOrca"
+    approx_examples: 1200000
+    license: "Apache-2.0"
+    priority: "low"
+    ingestion:
+      tooling: "huggingface-hub"
+      mixing_ratio: 0.15
+      notes: "Deduplicate GPT-4 derived prompts against FLAN tasks."
+
+preference:
+  - name: "HH-RLHF"
+    dataset_id: "Anthropic/hh-rlhf"
+    approx_pairs: 160000
+    license: "CC-BY-SA"
+    priority: "high"
+    ingestion:
+      tooling: "dpo-loader"
+      mixing_ratio: 1.0
+      notes: "Convert to DPO JSONL schema (prompt, chosen, rejected)."
+
+retrieval_eval:
+  - name: "BEIR"
+    dataset_id: "beir/beir"
+    collections: 18
+    license: "Mixed"
+    priority: "high"
+    ingestion:
+      tooling: "beir-loader"
+      notes: "Store each collection under rag/beir/<dataset>."
+  - name: "MS MARCO"
+    dataset_id: "msmarco"
+    collections: 2
+    license: "Microsoft Research"
+    priority: "medium"
+    ingestion:
+      tooling: "msmarco-tools"
+      notes: "Accept research-only terms; do not redistribute raw data."
+  - name: "Natural Questions"
+    dataset_id: "natural_questions"
+    collections: 1
+    license: "CC-BY-SA"
+    priority: "medium"
+    ingestion:
+      tooling: "nq-downloader"
+      notes: "Link to specific Wikipedia snapshot for reproducibility."
+  - name: "KILT"
+    dataset_id: "facebook/kilt_tasks"
+    collections: 11
+    license: "CC-BY-SA"
+    priority: "low"
+    ingestion:
+      tooling: "huggingface-hub"
+      notes: "Reuse the unified knowledge store for retrieval stress tests."
+
+safety:
+  - name: "RealToxicityPrompts"
+    dataset_id: "allenai/real-toxicity-prompts"
+    approx_examples: 100000
+    license: "MIT"
+    priority: "high"
+    ingestion:
+      tooling: "toxicity-loader"
+      notes: "Keep toxicity scores as metadata for classifier calibration."
+  - name: "Civil Comments"
+    dataset_id: "jigsaw/civil_comments"
+    approx_examples: 2000000
+    license: "CC-BY-4.0"
+    priority: "medium"
+    ingestion:
+      tooling: "kaggle-api"
+      notes: "Scrub user handles to align with privacy policy."
+  - name: "Wikipedia Detox"
+    dataset_id: "wikipedia_talk_labels"
+    approx_examples: 160000
+    license: "CC-BY-SA"
+    priority: "low"
+    ingestion:
+      tooling: "huggingface-hub"
+      notes: "Map labels to unified toxicity taxonomy for evaluation."
+
+exclusions:
+  - name: "Books3"
+    reason: "Pirated commercial ebooks – exclude to avoid copyright exposure."
+  - name: "Open-subtitles"
+    reason: "License ambiguity and high personal data risk."
+  - name: "Unlicensed web scrapes"
+    reason: "Only ingest data with explicit ODC/CC/OSS terms."

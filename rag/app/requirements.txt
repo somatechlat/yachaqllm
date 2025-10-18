@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+qdrant-client
+pydantic
+requests
+boto3
+pandas
+pyarrow
+httpx
+parsel
+asyncio
+sentence-transformers
+PyYAML
+pytest
+google-cloud-storage

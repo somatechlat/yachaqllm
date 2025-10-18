@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Deploy RAG Stack",
+      "type": "shell",
+      "command": "docker compose -f docker/compose.rag.yaml up -d"
+    },
+    {
+      "label": "Ingest Seed",
+      "type": "shell",
+      "command": "python rag/ingest/crawl.py"
+    },
+    {
+      "label": "Build Index",
+      "type": "shell",
+      "command": "python rag/ingest/index.py"
+    },
+    {
+      "label": "Smoke Test",
+      "type": "shell",
+      "command": "curl -s http://localhost:8000/health"
+    },
+    {
+      "label": "Run Tests",
+      "type": "shell",
+      "command": "pytest"
+    }
+  ]
+}
