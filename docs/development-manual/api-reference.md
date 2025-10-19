@@ -1,23 +1,13 @@
 # API Reference
 
-## `/ask`
+## `GET /health`
 
-- **Method:** POST
-- **Body:**
-  ```json
-  {
-    "question": "Your question here"
-  }
-  ```
+- **Purpose:** Returns a JSON payload confirming the FastAPI service is running.
 - **Response:**
   ```json
   {
-    "answer": "The answer to your question",
-    "sources": [
-      {
-        "url": "URL of the source document",
-        "title": "Title of the source document"
-      }
-    ]
+    "status": "ok"
   }
   ```
+
+There are no additional public endpoints in the current codebase.
