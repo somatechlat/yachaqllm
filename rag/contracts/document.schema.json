@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "YACHAQ Document Metadata",
+  "type": "object",
+  "required": [
+    "source", "title", "page_url", "download_url", "checksum", "harvest_date"
+  ],
+  "properties": {
+    "source": {"type": "string"},
+    "authority": {"type": "string"},
+    "title": {"type": "string"},
+    "page_url": {"type": "string", "format": "uri"},
+    "download_url": {"type": "string"},
+    "local_path": {"type": "string"},
+    "checksum": {"type": "string"},
+    "harvest_date": {"type": "string", "format": "date-time"},
+    "language": {"type": "string"},
+    "license": {"type": "string"},
+    "ro_issue_number": {"type": "string"},
+    "ro_issue_date": {"type": "string"},
+    "law_number": {"type": "string"},
+    "article": {"type": "string"}
+  },
+  "additionalProperties": true
+}

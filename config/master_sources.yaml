@@ -1,0 +1,123 @@
+# Canonical Master List of Authoritative Data Sources for YACHAQ-LLM
+# Generated: 2025-10-18
+# This file is the single source of truth for the ingestion pipeline.
+# Each entry is a primary, verifiable source critical for legal and tax expertise.
+
+meta:
+  version: 2.0
+  maintainer: "Yachaq Data Platform"
+  s3_prefix: "s3://yachaq-lex-data-bucket-<suffix>/raw/ecuador"
+  ingestion_note: "Prioritize by authority. All documents must be linked to a Registro Oficial citation where applicable."
+
+# --- Tier 1: Core Legal & Executive Authority ---
+legislative_and_executive:
+  - institution: "Registro Oficial"
+    description: "The official gazette of Ecuador. The single source of truth for all laws, decrees, resolutions, and official acts. Highest priority."
+    url: "https://www.registroficial.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Asamblea Nacional"
+    description: "Full texts of all approved laws, legislative debates, and project tracking. Links back to the Registro Oficial."
+    url: "https://www.asambleanacional.gob.ec/es/leyes-aprobadas"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Presidencia de la República (Minka)"
+    description: "Official portal for all Executive Decrees, numbered and dated with links to the Registro Oficial."
+    url: "https://www.minka.presidencia.gob.ec/"
+    harvest_method: "Scrapy"
+
+# --- Tier 1: Judicial Authority & Jurisprudence ---
+judicial:
+  - institution: "Corte Constitucional"
+    description: "Rulings, sentences, and decisions with constitutional effects. Critical for legal interpretation."
+    url: "https://www.corteconstitucional.gob.ec/"
+    harvest_method: "Selenium/Search"
+  - institution: "Corte Nacional de Justicia"
+    description: "Jurisprudential precedents and resolutions with the force of law. Defines legal doctrine."
+    url: "https://www.cortenacional.gob.ec/"
+    harvest_method: "Selenium/Search"
+  - institution: "Consejo de la Judicatura"
+    description: "Official search engine for all judicial rulings (fallos) and administrative regulations for the judicial branch."
+    url: "https://www.funcionjudicial.gob.ec/www/index.php"
+    harvest_method: "Selenium/Search"
+
+# --- Tier 1: Tax, Customs & Financial Authority ---
+tax_and_finance:
+  - institution: "Servicio de Rentas Internas (SRI)"
+    description: "The definitive source for all tax regulations, resolutions, circulars, and official guides. Core of the tax knowledge base."
+    url: "https://www.sri.gob.ec/normativa"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Servicio Nacional de Aduana del Ecuador (SENAE)"
+    description: "Official source for customs regulations (COPCI), import/export procedures, and tariff information."
+    url: "https://www.aduana.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Ministerio de Economía y Finanzas (MEF)"
+    description: "Regulations for the national financial system (SINFIP), including accounting, budget, and treasury rules."
+    url: "https://www.finanzas.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Banco Central del Ecuador (BCE)"
+    description: "Official economic statistics, monetary policy publications, and financial data."
+    url: "https://www.bce.fin.ec/"
+    harvest_method: "Scrapy/API"
+
+# --- Tier 2: Sectoral Regulation & Public Administration ---
+sectoral_regulation:
+  - institution: "Ministerio del Trabajo"
+    description: "Labor law, ministerial agreements, and regulations concerning employment."
+    url: "https://www.trabajo.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Instituto Ecuatoriano de Seguridad Social (IESS)"
+    description: "Regulations, procedures, and resolutions for the national social security system."
+    url: "https://www.iess.gob.ec/normativa"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Servicio Nacional de Contratación Pública (SERCOP)"
+    description: "The official portal for public procurement, including all related laws, regulations, and process data."
+    url: "https://www.compraspublicas.gob.ec/"
+    harvest_method: "Scrapy/API"
+  - institution: "Ministerio de Salud Pública (MSP)"
+    description: "Health regulations, protocols, and guides."
+    url: "https://www.salud.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Agencia Nacional de Regulación, Control y Vigilancia Sanitaria (ARCSA)"
+    description: "Sanitary regulations and resolutions for food, medicine, and other products."
+    url: "https://www.controlsanitario.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Ministerio de Educación (MinEduc)"
+    description: "The official text of the Organic Law of Intercultural Education (LOEI) and related regulations."
+    url: "https://educacion.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Secretaría de Educación Superior, Ciencia, Tecnología e Innovación (SENESCYT)"
+    description: "Regulations concerning higher education, university titles, and research."
+    url: "https://www.educacionsuperior.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+
+# --- Tier 2: State Control & Human Rights ---
+state_control_and_rights:
+  - institution: "Contraloría General del Estado"
+    description: "Regulations on fiscal control and public administration audits."
+    url: "https://www.contraloria.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Procuraduría General del Estado"
+    description: "Legal framework and regulations for the state's legal representation."
+    url: "https://www.pge.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+  - institution: "Defensoría del Pueblo"
+    description: "Reports and resolutions on human rights and rights of nature."
+    url: "https://www.dpe.gob.ec/"
+    harvest_method: "Scrapy/PDF"
+
+# --- Tier 3: Supporting Academic & Statistical Sources ---
+supporting_academic_and_statistical:
+  - institution: "Instituto Nacional de Estadística y Censos (INEC)"
+    description: "Official national statistics, census data, and demographic series."
+    url: "https://www.ecuadorencifras.gob.ec/"
+    harvest_method: "Scrapy/API"
+  - institution: "Red de Repositorios de Acceso Abierto del Ecuador (RRAAE)"
+    description: "National aggregator for all academic and scientific publications. Use to discover relevant legal and economic research."
+    url: "https://rraae.cedia.edu.ec/"
+    harvest_method: "OAI-PMH"
+
+# --- Tier 3: International Context ---
+international_context:
+  - institution: "Naciones Unidas Ecuador"
+    description: "Country framework, reports, and SDG data providing international context for national policies."
+    url: "https://ecuador.un.org/"
+    harvest_method: "Scrapy/PDF"
