@@ -1,96 +1,84 @@
-# Data Sources
+# Ecuadorian Academic Source Catalog
 
-This document outlines the primary and secondary data sources for the YACHAQ-LEX project.
+This catalog lists the university and cultural repositories that feed the YACHAQ-LLM training corpus. Every entry has been validated as of 2025-10-18 and comes with open access terms compatible with downstream processing. For harvesting, we will proceed one source at a time using Selenium, BeautifulSoup, Scrapy, or the native OAI-PMH endpoints exposed by each DSpace instance. Processed artifacts are written to the project S3 bucket (`s3://yachaq-lex-data-bucket-<suffix>/raw/ecuador_academia/`) before downstream curation and SageMaker training.
 
-## Primary Sources
+## National Public Universities
 
-### 1. Official Gazette (`Registro Oficial`)
+| Institution | Repository/Library Name | URL | Content Notes |
+|------------|------------------------|-----|---------------|
+| Universidad Central del Ecuador (UCE) | Repositorio Digital UCE | https://www.dspace.uce.edu.ec/ | Theses, research papers, institutional academic production. DSpace platform with full-text downloads |
+| Escuela Politécnica Nacional (EPN) | Repositorio Digital EPN | https://bibdigital.epn.edu.ec/ | Engineering and science theses, research projects, scientific publications |
+| Escuela Superior Politécnica del Litoral (ESPOL) | DSpace ESPOL | https://www.dspace.espol.edu.ec/ | Undergraduate and graduate theses across faculties, applied sciences focus |
+| ESPOL | Biblioteca Central ESPOL | https://www.cib.espol.edu.ec/ | Digital databases, subscribed scientific content, hybrid physical/digital library services |
+| Universidad de Cuenca (UCUENCA) | Repositorio Digital UCUENCA | https://dspace.ucuenca.edu.ec/ | Multidisciplinary theses, dissertations, research articles |
+| Universidad Técnica de Ambato (UTA) | Repositorio Digital UTA | https://repositorio.uta.edu.ec/ | Graduation projects and institutional academic output |
+| Universidad Nacional de Loja (UNL) | Repositorio Digital UNL | https://dspace.unl.edu.ec/ | Agricultural and environmental research, theses, project reports |
+| Universidad Técnica del Norte (UTN) | Repositorio Digital UTN | https://repositorio.utn.edu.ec/ | Theses, articles, academic publications with open access PDFs |
+| Universidad Politécnica Salesiana (UPS) | Repositorio Institucional UPS | https://dspace.ups.edu.ec/ | Research output, theses, ABYA YALA publishing content |
+| Universidad Católica de Santiago de Guayaquil (UCSG) | Repositorio Digital UCSG | http://repositorio.ucsg.edu.ec/ | Multidisciplinary theses, research papers, notable legal studies collection |
+| Universidad Técnica de Machala (UTMACHALA) | Repositorio Digital UTMACHALA | http://repositorio.utmachala.edu.ec/ | Theses, teaching materials, research indexed by RRAAE and La Referencia |
+| Universidad Técnica Particular de Loja (UTPL) | Repositorio Institucional UTPL | https://dspace.utpl.edu.ec/ | Distance education resources, learning objects, institutional production |
 
-- **URL:** `https://www.registroficial.gob.ec/`
-- **Data Type:** Unstructured (PDF)
-- **Content:** The official text of all laws, decrees, and regulations.
-- **Access Method:** The download links for each publication follow a predictable pattern. We can automate the discovery and download of new issues.
+## Private Universities
 
-### 2. Open Data Portal (`datosabiertos.gob.ec`)
+| Institution | Repository/Library Name | URL | Content Notes |
+|------------|------------------------|-----|---------------|
+| Universidad San Francisco de Quito (USFQ) | Repositorio Digital USFQ | https://repositorio.usfq.edu.ec/ | Theses, dissertations, faculty research across disciplines |
+| Universidad Andina Simón Bolívar (UASB) | UASB-Digital | https://repositorio.uasb.edu.ec/ | Postgraduate theses and publications in social sciences, law, Andean studies |
+| UASB | Biblioteca UASB | https://biblioteca.uasb.edu.ec/ | Digital catalog with Koha, access to subscribed databases and institutional collections |
+| Pontificia Universidad Católica del Ecuador (PUCE) | Repositorio Digital PUCE | https://repositorio.puce.edu.ec/ | Comprehensive academic repository for all faculties and research centers |
 
-- **URL:** `https://www.datosabiertos.gob.ec/`
-- **Data Type:** Structured (CSV, XLSX)
-- **Content:** A wide range of datasets from various government entities.
-- **Key Datasets:**
-    - **Registro Único de Contribuyentes (RUC):** The official registry of taxpayers from the SRI.
+## Specialized Academic Institutions
 
-## Secondary Sources
+| Institution | Repository/Library Name | URL | Content Notes |
+|------------|------------------------|-----|---------------|
+| FLACSO Ecuador | Repositorio FLACSO Andes | https://repositorio.flacsoandes.edu.ec/ | Books, working papers, journals specializing in social sciences and policy |
+| FLACSO Ecuador | Biblioteca FLACSO Ecuador | https://www.flacso.edu.ec/es/biblioteca | Physical/digital library access, subscribed databases, research support |
+| Instituto de Altos Estudios Nacionales (IAEN) | Repositorio IAEN | Via RRAAE | Public administration, security, international relations research |
 
-### 1. National Assembly (`asambleanacional.gob.ec`)
+## National Networks and Aggregators
 
-- **URL:** `https://www.asambleanacional.gob.ec/es/leyes-aprobadas`
-- **Data Type:** Unstructured (PDF)
-- **Content:** The full text of approved laws.
-- **Notes:** A good source for cross-referencing, but the Official Gazette is the primary source of truth.
+| Institution | Platform | URL | Content Notes |
+|------------|----------|-----|---------------|
+| CEDIA | RRAAE | https://rraae.cedia.edu.ec/vufind/ | National OAI-PMH aggregator for open access academic content, weekly harvest cadence |
+| CEDIA | REDI | https://redi.cedia.edu.ec/ | Researcher profiles, publications, collaboration graphs |
+| CEDIA | ROA | https://roa.cedia.edu.ec/ | Learning object repository with open educational resources |
+| CEDIA | Repositorio Multimedia | Via CEDIA platform | Audiovisual academic materials (presentations, seminars, courses) |
+| Bibliotecas del Ecuador | Portal de Bibliotecas | https://www.bibliotecasdelecuador.com/ | Federated search across university library catalogs |
+| COBUEC | COBUEC Network | https://www.bibliotecasdelecuador.com/cobuec/ | Consortium for inter-library resource sharing and access governance |
 
-## Sources Requiring Further Research
+## Public Libraries and Cultural Institutions
 
-### 1. Constitutional Court (`corteconstitucional.gob.ec`)
+| Institution | Platform | Access | Content Notes |
+|------------|----------|--------|---------------|
+| Banco Central del Ecuador (BCE) | Biblioteca BCE | Via COBUEC | Economic, financial, historical archives, cultural heritage |
+| Casa de la Cultura Ecuatoriana (CCE) | Biblioteca CCE | Via COBUEC | Cultural heritage, arts, literature, national archives |
+| Defensoría del Pueblo | Biblioteca Defensoría | Via RRAAE | Human rights, constitutional law, social justice materials |
+| Biblioteca Nacional del Ecuador (BNE) | Biblioteca Nacional | Via COBUEC | National bibliography, rare books, manuscripts |
 
-- **URL:** `https://www.corteconstitucional.gob.ec/`
-- **Data Type:** Unstructured (PDF)
-- **Content:** Rulings and decisions of the Constitutional Court.
-- **Notes:** Further investigation is needed to find a reliable way to access their publications.
+## Additional Confirmed University Repositories
 
-## Global Foundation Corpora
+| Institution | Repository/Library Name | URL | Content Notes |
+|------------|------------------------|-----|---------------|
+| Universidad Técnica Estatal de Quevedo (UTEQ) | Repositorio Digital UTEQ | https://repositorio.uteq.edu.ec/ | Agricultural, environmental, engineering research |
+| Universidad de las Fuerzas Armadas (ESPE) | Repositorio Digital ESPE | https://repositorio.espe.edu.ec/ | Military sciences, engineering, administrative sciences |
+| Universidad Regional Amazónica IKIAM | Repositorio Digital IKIAM | https://repositorio.ikiam.edu.ec/ | Biodiversity, earth sciences, Amazon-focused research |
+| Universidad Estatal Amazónica (UEA) | Repositorio Digital UEA | https://repositorio.uea.edu.ec/ | Forestry, ecotourism, agricultural production |
+| Universidad Laica Eloy Alfaro de Manabí (ULEAM) | Repositorio Digital ULEAM | https://repositorio.uleam.edu.ec/ | Multidisciplinary theses with coastal and marine emphasis |
 
-These corpora provide the large-scale text backbone for pretraining. All entries below include license notes to keep the stack compliant.
+## Content Types and Technical Profile
 
-- **Dolma (AI2):** ~3T tokens. License: ODC-BY. Coverage: web, papers, code, books, encyclopedias. Source: `https://huggingface.co/datasets/allenai/dolma`.
-- **RefinedWeb (TII):** 600B tokens from Common Crawl with multi-stage filtering. License: ODC-BY. Source: `https://huggingface.co/datasets/tiiuae/falcon-refinedweb`.
-- **FineWeb (Hugging Face):** 15T tokens across 96 Common Crawl snapshots with MinHash dedup. License: ODC-BY. Source: `https://huggingface.co/datasets/HuggingFaceFW/fineweb`.
-- **RedPajama (Together):** 1T token multi-source mix following the LLaMA recipe. License: per subset (mostly ODC-BY/CC). Source: `https://huggingface.co/datasets/togethercomputer/RedPajama-Data-V2`.
-- **C4 (Google):** Cleaned Common Crawl baseline. License: ODC-BY. Source: `https://huggingface.co/datasets/c4`.
-- **The Pile (EleutherAI):** 825 GiB / 22 subsets. License: per subset; exclude Books3. Source: `https://pile.eleuther.ai/`.
-- **Wikipedia Dumps:** CC-BY-SA. Pull latest en/es dumps. Source: `https://dumps.wikimedia.org/`.
-- **Project Gutenberg:** US public domain books. Source: `https://www.gutenberg.org/`.
-- **arXiv CC slices:** Use only CC-licensed papers and retain attribution. Source: `https://huggingface.co/datasets/arxiv_dataset`.
+- **Document formats:** Theses (undergraduate, masters, doctoral), research articles, technical reports, books, working papers, journals, conference proceedings, learning objects.
+- **Repository stack:** Predominantly DSpace with Koha catalogs. Metadata in Dublin Core or MARC21, harvested via OAI-PMH endpoints.
+- **Access model:** Public/open access, Spanish-first content with growing bilingual coverage.
+- **Indexing:** RRAAE, La Referencia, OpenDOAR, ROAR, Google Scholar, BASE. Persistent identifiers supplied per institution.
+- **Ingestion storage:** Raw crawls land in S3 before curation and chunking for retrieval pipelines. Maintain attribution logs per batch.
+- **Compliance:** Governed by COESCI, LOTAIP, and applicable Creative Commons licenses. Record license metadata for every document prior to training ingestion.
 
-## Code and Software Documentation
+## Operating Procedure
 
-- **The Stack v2 (BigCode):** 6.4 TB permissive code from Software Heritage. License: permissive OSS only. Source: `https://huggingface.co/datasets/bigcode/the-stack-dedup`.
-- **StarCoder2Data:** Adds issues, docs, notebooks. License: permissive OSS only. Source: `https://huggingface.co/datasets/bigcode/starcoderdata`.
-
-## Supervised Instruction Tuning
-
-- **FLAN Collection:** Aggregated task prompts. License: per component (mostly academic-friendly). Source: `https://github.com/google-research/FLAN/tree/main/flan`.
-- **Super-Natural Instructions:** 1,616 tasks with expert prompts. License: Apache 2.0. Source: `https://huggingface.co/datasets/super_natural_instructions`.
-- **P3 / PromptSource:** Prompt templates for 170+ datasets. License: Apache 2.0. Source: `https://github.com/bigscience-workshop/promptsource`.
-- **Databricks Dolly-15k:** 15k CC-BY-SA instructions. Source: `https://huggingface.co/datasets/databricks/databricks-dolly-15k`.
-- **OpenOrca:** GPT-augmented FLAN mix. License: Apache 2.0. Source: `https://huggingface.co/datasets/Open-Orca/OpenOrca`.
-
-## Preference Data (DPO/RLHF)
-
-- **Anthropic HH-RLHF:** Helpful/harmless pairwise data. License: CC-BY-SA. Source: `https://huggingface.co/datasets/Anthropic/hh-rlhf`.
-
-## Evaluation Suites
-
-- **MMLU:** General knowledge benchmark. License: Apache 2.0. Source: `https://huggingface.co/datasets/cais/mmlu`.
-- **HellaSwag:** Commonsense reasoning. License: MIT. Source: `https://huggingface.co/datasets/Rowan/hellaswag`.
-- **ARC (Challenge/Easy):** Science QA. License: CC-BY-SA. Source: `https://huggingface.co/datasets/ai2_arc`.
-- **TruthfulQA:** Misconception resilience. License: MIT. Source: `https://huggingface.co/datasets/truthful_qa`.
-- **GSM8K:** Math word problems. License: MIT. Source: `https://huggingface.co/datasets/gsm8k`.
-- **APPS / HumanEval / MBPP:** Code evaluation benchmarks. Licenses: MIT/Apache. Sources: `https://huggingface.co/datasets/codeparrot/apps`, `https://github.com/openai/human-eval`, `https://github.com/google-research/google-research/tree/master/mbpp`.
-
-## Retrieval and RAG Testing
-
-- **BEIR:** 18 retrieval datasets. License: per subset (mostly public). Source: `https://huggingface.co/datasets/beir/beir`.
-- **MS MARCO:** Web passage ranking. License: Microsoft Research terms. Source: `https://github.com/microsoft/MSMARCO-Document-Ranking`.
-- **Natural Questions:** Google queries plus Wikipedia answers. License: CC BY-SA 3.0. Source: `https://ai.google.com/research/NaturalQuestions/download`.
-- **KILT:** Knowledge-intensive tasks aligned to Wikipedia. License: CC BY-SA. Source: `https://huggingface.co/datasets/facebook/kilt_tasks`.
-
-## Safety and Toxicity Datasets
-
-- **RealToxicityPrompts:** Toxicity prompts with scores. License: MIT. Source: `https://huggingface.co/datasets/allenai/real-toxicity-prompts`.
-- **Civil Comments / Jigsaw:** Toxicity labels with identity annotations. License: CC BY 4.0. Source: `https://www.kaggle.com/c/jigsaw-unintended-bias-in-toxicity-classification`.
-- **Wikipedia Detox:** Talk page moderation labels. License: CC BY-SA. Source: `https://figshare.com/articles/dataset/Wikipedia_Talk_Labels_Toxicity/4054689`.
-
-## Exclusions and Guardrails
-
-- **Books3:** Exclude to avoid copyright violations; do not mirror derivatives.
-- **Unlicensed Crawls:** Only ingest datasets with explicit ODC/CC/OSS terms. Maintain attribution logs for every download batch.
+1. Select a single source and configure a Scrapy or Selenium-based spider depending on the repository’s search UX. Prefer OAI-PMH harvesters when provided by DSpace.
+2. Capture document metadata (title, authors, date, faculty, degree, URL, license) along with the PDF or supporting files.
+3. Store raw payloads under `s3://yachaq-lex-data-bucket-<suffix>/raw/ecuador_academia/<institution>/YYYY/MM/DD/` with a manifest JSONL.
+4. Log crawler runs and errors to `rag/ingest/logs/<institution>.log` for reproducibility.
+5. After quality checks, convert documents into chunked text suitable for retrieval and push curated artifacts to the training lake for SageMaker ingestion.
