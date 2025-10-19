@@ -18,6 +18,8 @@ training/*.jsonl
 # Generated logs
 rag/ingest/download_live.log
 rag/ingest/supercias_companies.jsonl
+rag/ingest/registro_oficial_local/
+rag/ingest/registro_oficial_sample.jsonl
 training/*.log
 
 # Local credentials or keys
