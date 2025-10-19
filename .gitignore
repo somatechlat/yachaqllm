@@ -22,3 +22,6 @@ training/*.log
 
 # Local credentials or keys
 yachaq-lex-key.pem
+
+# Google Cloud config
+.gcloud-config/
