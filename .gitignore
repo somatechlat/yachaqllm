@@ -24,4 +24,5 @@ training/*.log
 yachaq-lex-key.pem
 
 # Google Cloud config
+.gcloud/
 .gcloud-config/
