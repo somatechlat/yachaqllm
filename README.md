@@ -49,11 +49,10 @@ Based on [nanochat](https://github.com/karpathy/nanochat) - minimal, efficient L
 
 ## Current Status
 
-- ✓ 9,352 documents collected from government sources
-- ✓ 6,616 files uploaded to S3 (yachaq-lex-raw-0017472631)
-- ✓ 30+ academic sources identified and validated
-- ⏳ Comprehensive data collection in progress
-- ⏳ nanochat integration pending
+- ✓ Core scrapers operational for priority government sources
+- ✓ AWS S3 bucket (`yachaq-lex-raw-0017472631`) provisioned for raw data storage
+- ⏳ Large-scale backfill and continuous ingestion in progress
+- ⏳ nanochat training integration and evaluation pending
 
 ## Quality Standards
 
