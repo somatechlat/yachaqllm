@@ -2,3 +2,23 @@ downloads/
 .terraform/
 *.xlsx
 *.xls
+
+# Python artefacts
+__pycache__/
+*.py[cod]
+
+# Generated datasets and checkpoints
+training/quality_synthetic_data/
+training/synthetic_data/
+quality_synthetic_data/
+synthetic_data/
+training/sample_*.jsonl
+training/*.jsonl
+
+# Generated logs
+rag/ingest/download_live.log
+rag/ingest/supercias_companies.jsonl
+training/*.log
+
+# Local credentials or keys
+yachaq-lex-key.pem
