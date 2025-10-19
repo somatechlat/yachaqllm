@@ -28,3 +28,35 @@ yachaq-lex-key.pem
 # Google Cloud config
 .gcloud/
 .gcloud-config/
+
+# Virtualenvs and Python envs
+.venv/
+env/
+venv/
+
+# Local data, downloads and large generated files
+data/raw/
+data/**/scrapy_downloads/
+rag/data/raw/
+rag/ingest/registro_oficial_local/
+rag/ingest/*.pdf
+*.pdf
+
+# Backups and runtime artifacts
+backups/
+**/backups/
+*.bak
+*.old
+*.backup
+
+# Logs
+*.log
+logs/
+rag/ingest/download_live.log
+
+# AWS local credentials / config - do not commit
+.aws/
+
+# Docker / compose local state
+docker-compose.override.yml
+.env
