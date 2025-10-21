@@ -30,6 +30,7 @@ REPO_URL="${REPO_URL:-https://github.com/somatechlat/yachaqllm.git}"
 REMOTE_DIR="${REMOTE_DIR:-~/yachaqllm}"
 REMOTE_LOG_DIR="/var/log/yachaq"
 REMOTE_LOG_FILE="$REMOTE_LOG_DIR/registro_oficial_current.log"
+LOCAL_ENV_FILE="$HOME/.yachaq_env"
 
 usage() {
   cat <<EOF
@@ -135,6 +136,16 @@ if [[ -d "$HOME/.aws" ]]; then
   gcloud compute scp --recurse "$HOME/.aws" "$INSTANCE":"~/.aws" >/dev/null || true
 else
   echo " - No local ~/.aws directory found; relying on AWS_* env vars if provided"
+fi
+
+echo "[5.6/8] Copying local .env to VM (if present)"
+if [[ -f "${LOCAL_ENV_FILE}" ]]; then
+  echo " - Copying ${LOCAL_ENV_FILE} to VM as ~/.yachaq_env"
+  gcloud compute scp "${LOCAL_ENV_FILE}" "$INSTANCE":"~/.yachaq_env" >/dev/null || true
+  # Also copy to the repo remote dir so docker can use it as an --env-file
+  gcloud compute scp "${LOCAL_ENV_FILE}" "$INSTANCE":"$REMOTE_DIR/.env" >/dev/null || true
+else
+  echo " - No local .env (${LOCAL_ENV_FILE}) found; skipping"
 fi
 
 FORCE_REBUILD="${FORCE_REBUILD:-0}"
