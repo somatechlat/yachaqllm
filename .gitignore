@@ -19,6 +19,9 @@ training/*.jsonl
 rag/ingest/download_live.log
 rag/ingest/supercias_companies.jsonl
 rag/ingest/registro_oficial_local/
+datosabiertos_local/
+rag/ingest/datosabiertos_local/
+rag/ingest/sri_local/
 rag/ingest/registro_oficial_sample.jsonl
 training/*.log
 

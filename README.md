@@ -79,6 +79,10 @@ pip install -r training/requirements.txt
 cd rag/ingest
 python scrape_all.py
 
+# New: harvest the national Datos Abiertos portal
+python real_datosabiertos_scraper.py --dry-run --limit 10 --dataset-limit 5
+# Remove --dry-run once validated to stream directly to S3
+
 # Train model (after data collection complete)
 cd training
 python train_nanochat_yachaq.py
