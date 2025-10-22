@@ -63,3 +63,6 @@ rag/ingest/download_live.log
 # Docker / compose local state
 docker-compose.override.yml
 .env
+
+# Ignore CDP output artifacts
+rag/discovery/out_cdp/
