@@ -1,0 +1,39 @@
+#  Sistema Oficial de Contratación Pública 
+  * Miércoles 22 de Octubre de 2025 | 12:37
+
+
+  * [[ Ingresar al Sistema ]](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/)
+
+
+»Búsqueda de Procesos de Contratación 
+  
+  
+En cumplimiento de lo dispuesto en el [**Acuerdo No. 012-2019**](https://www.gobiernoelectronico.gob.ec/wp-content/uploads/2019/07/Acuerdo-012-2019.pdf), emitido por el Ministerio de Telecomunicaciones y de la Sociedad de la Información, comunicamos nuestra política para el tratamiento de datos personales. Para continuar navegando en este sitio debe aceptar los términos de la misma. [**Política para el tratamiento de datos personales**](https://portal.compraspublicas.gob.ec/sercop/wp-content/uploads/2019/11/Politica_para_tratamiento_datos_personales.pdf)
+  
+Aceptar
+**Para Buscar Procesos:** Debe Presionar el botón 'Buscar Entidad', e ingresar el nombre de la Entidad que desea consultar.   
+---  
+| Palabras claves |  |  Para encontrar procesos según palabras claves ingresadas; ej: "computador", "camarón".   
+|  Entidad Contratante |  |  |  |  |  [ ![Buscar Entidad](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/img/search_f2.png)   
+Buscar Entidad ](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/PC/buscarProceso.cpe?sg=1) |   
+---|---  
+Presione el botón “Buscar Entidad”, para encontrar el nombre de la Entidad Contratante, de la cual desea buscar Procesos.   
+| Tipo de Contratación |  TODOS Publicación Licitación Subasta Inversa Electrónica Capacidad nacional Concurso publico Concurso Público por Contratación Directa Desierta Concurso Público por Lista Corta Desierta Contratacion directa Contratación Directa por Terminación Unilateral Convenio Marco Cotización Cotización por Terminación Unilateral Ferias Inclusivas Licitación de Seguros Lista corta Lista Corta por Contratación Directa Desierta  Menor Cuantía Precalificación Produccion Nacional Subasta Inversa Corporativa |  Que tipo de contratación es el proceso: Licitación, Subasta Inversa o Publicación u otro.   
+| Tipo de compra |  |  Qué tipo de compra se realizó en el proceso: Bienes, Obras o Servicios incluidos Consultoría   
+| Estado del Proceso |  |  Seleccione el Estado en que se encuentren los procesos interesados.   
+| Código del Proceso |  | Ingrese el código del proceso a buscar, ej: INCOP-SI-001  
+|  Por Fechas de Publicación (*) |  |  **Desde:** |  ![](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/img/fecha.jpg) |  |  **Hasta:** |  ![](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/img/fecha.jpg)  
+---|---|---|---|---  
+Seleccione el Período de la fecha de Publicación del Proceso.  
+(Periodo válido 6 meses antes y 15 días después de la fecha de publicación)   
+| Para una búsqueda más avanzada | [ Buscar en google](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/PC/buscarProceso.cpe?sg=1) |  Esta opción permite buscar información e inclusive documentos que se encuentren en el Portal. Para acceder puede ingresar en el campo "Palabras claves" lo que necesita buscar y clic en el enlace.   
+|  |  |  |  |  |  |  |  |  ![](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/img/marcoprueba1.png) ![](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/exe/generadorCaptcha.php) [Reload Captcha](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/PC/buscarProceso.cpe?sg=1) |  |  |  |  |  |  |  |  |  |   
+---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---  
+|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |   
+---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---  
+|  |  |  |  |  |  |  |  |  |  |  |  |  [ ![Buscar](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/img/search_f2.png)   
+Buscar](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/PC/buscarProceso.cpe?sg=1) |  |  [ ![Limpiar](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/img/blanks.gif)   
+Limpiar](https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/PC/buscarProceso.cpe?sg=1) |   
+---|---|---|---  
+|  |  |  |  |  |  |  |  |   
+Copyright © 2008 - 2025 Servicio Nacional de Contratación Pública. 

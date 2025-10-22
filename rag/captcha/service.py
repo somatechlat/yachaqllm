@@ -9,13 +9,15 @@ import logging
 from datetime import datetime, timezone
 from typing import Dict
 
-from rag.captcha import mock_adapter
+from rag.captcha import human_adapter, mock_adapter
 
 logger = logging.getLogger(__name__)
 
 
 class CaptchaService:
     def __init__(self, adapters: list = None):
+        # Default to the mock adapter for tests/local runs. Callers can inject
+        # a human-first adapter in production by passing `adapters=[human_adapter]`.
         self.adapters = adapters or [mock_adapter]
 
     def solve_task(self, task: Dict, timeout_seconds: int = 20) -> Dict:

@@ -1,0 +1,56 @@
+{
+  "trace_version": "1.0",
+  "trace_id": "2a74603c-1fe2-45f9-b562-df9f6d678699",
+  "capture_time": "2025-10-22T18:45:30.140911+00:00",
+  "source": {
+    "source_id": "requests-fallback",
+    "source_name": "requests-fallback",
+    "environment": "local"
+  },
+  "page_url": "https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/PC/buscarProceso.cpe?sg=1",
+  "browser": null,
+  "session": {
+    "session_id": "2a74603c-1fe2-45f9-b562-df9f6d678699"
+  },
+  "form_extractions": [],
+  "events": [
+    {
+      "type": "http.response",
+      "timestamp": "2025-10-22T18:45:30.140911+00:00",
+      "request": {
+        "method": "GET",
+        "url": "https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/PC/buscarProceso.cpe?sg=1"
+      },
+      "response": {
+        "status": 200,
+        "headers": {
+          "Date": "Wed, 22 Oct 2025 18:45:30 GMT",
+          "X-Frame-Options": "SAMEORIGIN",
+          "X-Content-Type-Options": "nosniff",
+          "X-XSS-Protection": "1; mode=block",
+          "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+          "Cache-Control": "no-store, no-cache, must-revalidate, post-check=0, pre-check=0",
+          "Set-Cookie": "mySESSIONID=zp1dE80o7c8VkFYfKsnFOXdD9%2C2; path=/; sameSite=Strict; domain=www.compraspublicas.gob.ec; HttpOnly, mySESSIONID=zp1dE80o7c8VkFYfKsnFOXdD9%2C2; path=/; sameSite=Strict; domain=www.compraspublicas.gob.ec; httponly, NSC_IUUQT_wTfswfs_TPDF_DOU=ffffffffc3a0662245525d5f4f58455e445a4a423660;Version=1;Max-Age=1800;path=/;secure;httponly",
+          "Expires": "Thu, 19 Nov 1981 08:52:00 GMT",
+          "Pragma": "no-cache",
+          "Keep-Alive": "timeout=5, max=99",
+          "Connection": "Keep-Alive",
+          "Content-Type": "text/html; charset=utf-8",
+          "Content-Encoding": "gzip",
+          "Transfer-Encoding": "chunked"
+        },
+        "body_snippet": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n\r\n\n<html xmlns=\"http://www.w3.org/1999/xhtml\"> \n    <head>\n        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n        <meta HTTP-EQUIV=\"Cache-Control\" CONTENT=\"max-age=2400, must-revalidate\"/>\n        <title>B&uacute;squeda de Procesos de Contrataci&oacute;n</title>\n        <link href='../css/formulario.css' rel='stylesheet' type='text/css'></link>\n        <link href='../css/bordes.css' rel='stylesheet' type='text/css'></link>\n        <!--<link href='../css/menu.css' rel='stylesheet' type='text/css'></link>-->\n        <link href='../css/reportes.css' rel='stylesheet' type='text/css'></link>\n        \n        <!-- Global site tag (gtag.js) - Google Analytics -->\n        <script async src=\"https://www.googletagmanager.com/gtag/js?id=UA-117851677-1\"></script>\n        <script>\n          window.dataLayer = window.dataLayer || [];\n          funct"
+      }
+    }
+  ],
+  "screenshots": [],
+  "artifacts": {
+    "raw_response_keys": {}
+  },
+  "metadata": {
+    "capture_agent": "requests_fallback"
+  },
+  "audit": {
+    "captchas": []
+  }
+}

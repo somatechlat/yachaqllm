@@ -1,0 +1,6 @@
+{
+  "github.copilot.advanced": {
+    "debug.overrideEngine": "http://YOUR-INSTANCE-IP:8000",
+    "debug.overrideProxyUrl": "http://YOUR-INSTANCE-IP:8000/v1"
+  }
+}

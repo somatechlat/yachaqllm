@@ -1,13 +1,13 @@
 {
   "trace_version": "1.0",
-  "trace_id": "d0d45e76-2698-4196-89b3-4f9da38e4bc7",
-  "capture_time": "2025-10-22T17:03:43.112676+00:00",
+  "trace_id": "f5e990f8-1c7c-45f9-bdc4-c7e4210d11f8",
+  "capture_time": "2025-10-22T19:07:06.516258+00:00",
   "source": {
     "source_id": "pydoll-cdp",
     "source_name": "pydoll-cdp",
     "environment": "local"
   },
-  "page_url": "https://example.com",
+  "page_url": "https://www.compraspublicas.gob.ec/ProcesoContratacion/compras/PC/buscarProceso.cpe?sg=1",
   "browser": {
     "user_agent": "pydoll",
     "browser_version": "unknown",
@@ -15,19 +15,20 @@
     "platform": "cdp"
   },
   "session": {
-    "session_id": "d0d45e76-2698-4196-89b3-4f9da38e4bc7"
+    "session_id": "f5e990f8-1c7c-45f9-bdc4-c7e4210d11f8"
   },
   "form_extractions": [],
   "events": [],
   "screenshots": [
     {
       "screenshot_id": "ss-1",
-      "timestamp": "2025-10-22T17:03:43.112676+00:00",
-      "storage_key": "d0d45e76-2698-4196-89b3-4f9da38e4bc7.png"
+      "timestamp": "2025-10-22T19:07:06.516258+00:00",
+      "storage_key": "f5e990f8-1c7c-45f9-bdc4-c7e4210d11f8.png"
     }
   ],
   "artifacts": {
-    "raw_response_keys": {}
+    "raw_response_keys": {},
+    "html_snapshot_path": "f5e990f8-1c7c-45f9-bdc4-c7e4210d11f8.html"
   },
   "metadata": {
     "capture_agent": "pydoll_cdp_discovery"
