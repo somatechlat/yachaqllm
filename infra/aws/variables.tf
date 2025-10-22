@@ -9,3 +9,15 @@ variable "key_name" {
   type        = string
   default     = "yachaq-lex-key"
 }
+
+variable "enable_training_job" {
+  description = "Whether to create SageMaker training job"
+  type        = bool
+  default     = false
+}
+
+variable "training_instance_type" {
+  description = "SageMaker training instance type"
+  type        = string
+  default     = "ml.g4dn.xlarge"
+}
