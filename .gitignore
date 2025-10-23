@@ -66,3 +66,13 @@ docker-compose.override.yml
 
 # Ignore CDP output artifacts
 rag/discovery/out_cdp/
+# Ignore local Registro Oficial PDFs
+registro_oficial_local/*.pdf
+# Ignore DS_Store and scrapy downloads
+**/.DS_Store
+rag/data/raw/
+rag/discovery/out_*
+# Ignore nested git inside nanochat
+nanochat/.git
+# Terraform state
+infra/aws/terraform.tfstate
