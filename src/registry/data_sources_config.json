@@ -1,0 +1,110 @@
+{
+    "project": "Yachaq LLM EC",
+    "version": "1.0.0",
+    "description": "First Ecuadorian Expert LLM Training Data",
+    "data_protection": {
+        "law": "Ley Orgánica de Protección de Datos Personales (LOPDP)",
+        "principles": [
+            "Only collect publicly available data",
+            "No personal identifiable information (PII)",
+            "Respect Creative Commons and open licenses",
+            "Document all sources",
+            "Verify government/official sources"
+        ]
+    },
+    "categories": {
+        "legal": {
+            "description": "Leyes, códigos, regulaciones",
+            "sources": [
+                "asambleanacional.gob.ec",
+                "lexis.com.ec",
+                "funcionjudicial.gob.ec"
+            ],
+            "status": "collecting"
+        },
+        "tributario": {
+            "description": "Impuestos, SRI, normativa fiscal",
+            "sources": [
+                "sri.gob.ec",
+                "datosabiertos.gob.ec"
+            ],
+            "status": "collected"
+        },
+        "contratacion": {
+            "description": "SERCOP, compras públicas, LOSNCP",
+            "sources": [
+                "compraspublicas.gob.ec",
+                "portal.compraspublicas.gob.ec"
+            ],
+            "status": "collecting"
+        },
+        "gobierno": {
+            "description": "Instituciones, trámites, servicios",
+            "sources": [
+                "gob.ec",
+                "datosabiertos.gob.ec"
+            ],
+            "status": "collecting"
+        },
+        "estadisticas": {
+            "description": "INEC, censos, datos demográficos",
+            "sources": [
+                "ecuadorencifras.gob.ec",
+                "censoecuador.gob.ec"
+            ],
+            "status": "pending"
+        },
+        "economia": {
+            "description": "BCE, finanzas, indicadores",
+            "sources": [
+                "bce.fin.ec"
+            ],
+            "status": "pending"
+        },
+        "cultura": {
+            "description": "Historia, tradiciones, patrimonio",
+            "sources": [
+                "culturaypatrimonio.gob.ec",
+                "casadelacultura.gob.ec",
+                "wikipedia.org"
+            ],
+            "status": "collected"
+        },
+        "turismo": {
+            "description": "Galápagos, destinos, guías",
+            "sources": [
+                "turismo.gob.ec",
+                "visitecuador.travel"
+            ],
+            "status": "collected"
+        },
+        "libros": {
+            "description": "Literatura ecuatoriana (dominio público)",
+            "sources": [
+                "gutenberg.org",
+                "archive.org"
+            ],
+            "status": "pending"
+        },
+        "geoespacial": {
+            "description": "Mapas, cartografía, geografía",
+            "sources": [
+                "geoportaligm.gob.ec"
+            ],
+            "status": "pending"
+        }
+    },
+    "quality_requirements": {
+        "min_content_length": 500,
+        "max_pii_score": 0,
+        "min_quality_score": 0.3,
+        "required_metadata": [
+            "source",
+            "date",
+            "license"
+        ]
+    },
+    "s3_bucket": "s3://yachaq-lex-raw-0017472631",
+    "created": "2025-12-30",
+    "updated": "2025-12-30"
+}

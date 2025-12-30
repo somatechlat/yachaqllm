@@ -1,93 +1,56 @@
-# YACHAQ-LEX
+# Yachaq LLM EC - Project Structure
+## First Ecuadorian Expert LLM
 
-The best Ecuadorian legal AI model for law, taxes, customs, and government processes.
+This repository contains the complete framework for training **Yachaq LLM EC**, the first Large Language Model deeply specialized in Ecuadorian law, culture, and knowledge.
 
-## Mission
-
-Train a specialized LLM that provides accurate, verified answers about:
-- Ecuadorian law and legal processes
-- Tax regulations and SRI procedures
-- Customs and SENAE requirements
-- Government processes and regulations
-- Court rulings and jurisprudence
-
-## Architecture
-
-Based on [nanochat](https://github.com/karpathy/nanochat) - minimal, efficient LLM training framework.
-
-**Training Pipeline:**
-1. **Data Collection** - Scrape verified Ecuadorian sources (government sites, academic repositories)
-2. **Data Processing** - Extract text, validate quality, create training format
-3. **Model Training** - Fine-tune base model (Qwen2.5-7B-Instruct) using nanochat
-4. **Evaluation** - Test accuracy on real legal/tax questions
-5. **Deployment** - Serve model via API
-
-## Data Sources
-
-### Government (CRITICAL)
-- Registro Oficial - Laws and decrees
-- SRI - Tax regulations
-- Función Judicial - Court rulings
-- Superintendencia de Compañías - Corporate regulations
-
-### Academic Repositories (HIGH)
-- 30+ Ecuadorian university repositories (DSpace)
-- Legal, accounting, tax research
-- Thesis and academic papers
-
-**Target:** 50K-100K verified documents for 90-95% accuracy
-
-## Project Structure
+## 📂 Architecture
 
 ```
-├── rag/ingest/          # Data collection scrapers
-├── training/            # nanochat training scripts
-├── rag/app/             # RAG API service
-├── config/              # Source configurations
-└── infra/aws/           # AWS infrastructure
+yachaqllm/
+├── docs/                   # Documentation (ISO/SRS)
+│   ├── srs/                # Software Requirements Specs
+│   ├── iso/                # ISO Compliance
+│   └── architecture/       # System Design
+├── src/                    # Source Code
+│   ├── collectors/         # Data Collection Framework
+│   │   ├── yachaq_collector.py
+│   │   └── discover_ecuador.py
+│   ├── training/           # ML Training Pipeline
+│   │   ├── data_prep/      # Data Processing (nanoGPT style)
+│   │   ├── config/         # Training Configurations
+│   │   └── sagemaker/      # AWS Integration
+│   ├── registry/           # Data Sources Registry
+│   └── utils/              # Shared Utilities
+├── tests/                  # Unit & Integration Tests
+├── deploy/                 # Deployment Scripts (Terraform/CDK)
+└── notebooks/              # Jupyter Notebooks for Analysis
 ```
 
-## Current Status
+## 🚀 Getting Started
 
-- ✓ Core scrapers operational for priority government sources
-- ✓ AWS S3 bucket (`yachaq-lex-raw-0017472631`) provisioned for raw data storage
-- ⏳ Large-scale backfill and continuous ingestion in progress
-- ⏳ nanochat training integration and evaluation pending
-
-## Quality Standards
-
-- NO synthetic/fake data
-- NO hallucinated answers
-- ONLY verified sources
-- Truth and accuracy over quantity
-
-## Tech Stack
-
-- **Training:** nanochat (PyTorch, minimal dependencies)
-- **Base Model:** Qwen2.5-7B-Instruct (Apache 2.0)
-- **Data:** Python scrapers (requests, BeautifulSoup, Scrapy)
-- **Storage:** AWS S3
-- **Infrastructure:** AWS (SageMaker for training)
-
-## Getting Started
-
+### 1. Data Collection
 ```bash
-# Install dependencies
-pip install -r training/requirements.txt
+# Discover sources
+python3 src/collectors/discover_ecuador_sources.py
 
-# Run data collection
-cd rag/ingest
-python scrape_all.py
-
-# New: harvest the national Datos Abiertos portal
-python real_datosabiertos_scraper.py --dry-run --limit 10 --dataset-limit 5
-# Remove --dry-run once validated to stream directly to S3
-
-# Train model (after data collection complete)
-cd training
-python train_nanochat_yachaq.py
+# Download specific category
+python3 src/collectors/yachaq_collector.py --category legal
 ```
 
-## License
+### 2. Training
+```bash
+# Prepare data (tokenize)
+python3 src/training/data_prep/prepare_data.py
 
-Apache 2.0
+# Launch SageMaker training (AWS)
+python3 src/training/sagemaker/launch_training.py
+```
+
+## ⚖️ Legal Compliance (LOPDP)
+All data processing complies with the **Ley Orgánica de Protección de Datos Personales (LOPDP)** of Ecuador.
+- Public sources only
+- No PII collection
+- Source registry logging
+
+## 📄 License
+MIT License
