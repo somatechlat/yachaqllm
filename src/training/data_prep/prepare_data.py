@@ -1,190 +1,216 @@
 #!/usr/bin/env python3
 """
-YACHAQ TRAINING - Inspired by Karpathy's nanoGPT
-=================================================
-Training setup for Yachaq LLM EC using Ecuador data
-
-Based on: https://github.com/karpathy/nanoGPT
-Adapted for: Ecuador-specific fine-tuning
+YACHAQ TRAINING DATA PREPARATION
+================================
+Prepares Ecuador data for LLM training on SageMaker.
+Supports both nanoGPT (binary) and HuggingFace (Arrow) formats.
 
 Usage:
-    1. python prepare_data.py  # Prepare training data
-    2. python train.py         # Train/fine-tune model
-    3. python sample.py        # Generate samples
+    python prepare_data.py --format hf --upload    # Prepare and upload to S3 for SageMaker
+    python prepare_data.py --sample                # Test with small sample
 """
 
 import os
 import json
 import glob
+import argparse
+import subprocess
 from pathlib import Path
-from typing import List, Dict
-import tiktoken
-import numpy as np
+from typing import List, Dict, Optional
 from datetime import datetime
+import numpy as np
+
+try:
+    import tiktoken
+    from datasets import Dataset, DatasetDict
+except ImportError:
+    print("Installing requirements...")
+    subprocess.check_call(["pip", "install", "tiktoken", "datasets", "pandas", "boto3"])
+    import tiktoken
+    from datasets import Dataset, DatasetDict
+
+import boto3
 
 # Configuration
-DATA_DIR = "/Users/macbookpro201916i964gb1tb/Downloads/1x/yachaq/training/data"
-S3_BUCKET = "s3://yachaq-lex-raw-0017472631"
-LOCAL_CACHE = "/tmp/yachaq_training_data"
+# Default local paths (can be overridden)
+REPO_ROOT = Path(__file__).resolve().parents[3]
+DATA_DIR = REPO_ROOT / "data"
+LOCAL_CACHE = REPO_ROOT / "data" / "cache"
+
+# S3 Configuration
+S3_BUCKET = "yachaq-lex-raw-0017472631"
+S3_RAW_PREFIX = ""  # Root of bucket
+S3_TRAIN_PREFIX = "training"
 
 # Tokenizer
-ENCODING = "cl100k_base"  # GPT-4 tokenizer
+ENCODING = "cl100k_base"  # GPT-4 / Llama 3 tokenizer
 
 def log(msg: str):
     print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}")
 
 class YachaqDataPreparer:
-    """Prepare Ecuador data for LLM training (nanoGPT style)"""
+    """Prepare Ecuador data for LLM training"""
     
-    def __init__(self):
+    def __init__(self, sample_mode: bool = False):
         self.enc = tiktoken.get_encoding(ENCODING)
-        self.data_dir = Path(DATA_DIR)
+        self.data_dir = DATA_DIR
         self.data_dir.mkdir(parents=True, exist_ok=True)
+        self.cache_dir = LOCAL_CACHE
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
+        self.sample_mode = sample_mode
+        self.s3_client = boto3.client('s3')
         
-    def download_from_s3(self, prefix: str = "") -> List[str]:
+    def download_from_s3(self, categories: List[str]) -> List[str]:
         """Download training data from S3"""
-        import subprocess
+        all_files = []
         
-        local_dir = Path(LOCAL_CACHE) / prefix
-        local_dir.mkdir(parents=True, exist_ok=True)
-        
-        log(f"Downloading from S3: {S3_BUCKET}/{prefix}")
-        
-        result = subprocess.run([
-            "aws", "s3", "sync",
-            f"{S3_BUCKET}/{prefix}",
-            str(local_dir),
-            "--exclude", "*.zip"
-        ], capture_output=True, text=True)
-        
-        if result.returncode == 0:
-            files = list(local_dir.rglob("*.*"))
-            log(f"Downloaded {len(files)} files")
-            return [str(f) for f in files]
-        else:
-            log(f"Error: {result.stderr}")
-            return []
+        for category in categories:
+            log(f"Downloading category: {category}")
+            local_cat_dir = self.cache_dir / category
+            local_cat_dir.mkdir(parents=True, exist_ok=True)
+            
+            if self.sample_mode:
+                # In sample mode, valid S3 list is needed.
+                # Use paginator to get just a few files
+                paginator = self.s3_client.get_paginator('list_objects_v2')
+                pages = paginator.paginate(Bucket=S3_BUCKET, Prefix=f"{category}/", PaginationConfig={'MaxItems': 10})
+                
+                for page in pages:
+                    if 'Contents' not in page:
+                        continue
+                    for obj in page['Contents']:
+                        key = obj['Key']
+                        if key.endswith(('.txt', '.md', '.json', '.csv')):
+                            local_path = self.cache_dir / key
+                            local_path.parent.mkdir(parents=True, exist_ok=True)
+                            if not local_path.exists():
+                                self.s3_client.download_file(S3_BUCKET, key, str(local_path))
+                            all_files.append(str(local_path))
+            else:
+                # Full sync
+                cmd = [
+                    "aws", "s3", "sync",
+                    f"s3://{S3_BUCKET}/{category}",
+                    str(local_cat_dir),
+                    "--exclude", "*.zip",
+                    "--exclude", "*.pdf"
+                ]
+                subprocess.run(cmd, check=True)
+                all_files.extend(list(local_cat_dir.rglob("*.*")))
+                
+        return [str(f) for f in all_files if str(f).endswith(('.txt', '.md', '.json', '.csv'))]
     
     def read_file(self, filepath: str) -> str:
         """Read content from various file types"""
-        ext = Path(filepath).suffix.lower()
+        path = Path(filepath)
+        ext = path.suffix.lower()
         
         try:
             if ext in ['.txt', '.md']:
-                with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                with open(path, 'r', encoding='utf-8', errors='ignore') as f:
                     return f.read()
             
             elif ext == '.json':
-                with open(filepath, 'r', encoding='utf-8') as f:
+                with open(path, 'r', encoding='utf-8') as f:
                     data = json.load(f)
                     if isinstance(data, list):
                         return "\n\n".join(str(item) for item in data)
                     elif isinstance(data, dict):
-                        return json.dumps(data, ensure_ascii=False, indent=2)
+                        return json.dumps(data, ensure_ascii=False)
                     return str(data)
             
             elif ext == '.csv':
-                with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                with open(path, 'r', encoding='utf-8', errors='ignore') as f:
                     return f.read()
             
-            else:
-                return ""
-                
+            return ""
         except Exception as e:
-            log(f"Error reading {filepath}: {e}")
+            log(f"Error reading {path}: {e}")
             return ""
     
-    def prepare_corpus(self, categories: List[str] = None) -> str:
-        """Prepare full training corpus from S3 data"""
-        
+    def prepare_dataset(self, categories: List[str] = None) -> List[Dict]:
+        """Prepare dataset in memory (list of dicts)"""
         if categories is None:
             categories = [
-                "asamblea",      # Legal documents
-                "sri",           # Tax data
-                "tributario",    # Tax regulations
-                "contratacion",  # SERCOP
-                "datos_abiertos", # Open data
-                "cultura_turismo", # Culture & tourism
-                "libros_ecuador", # Books
-                "gobierno",      # Government
+                "asamblea", "sri", "tributario", 
+                "contratacion", "datos_abiertos"
             ]
         
-        all_text = []
+        files = self.download_from_s3(categories)
+        log(f"Processing {len(files)} files...")
         
-        for category in categories:
-            log(f"Processing category: {category}")
-            files = self.download_from_s3(category)
-            
-            for filepath in files[:1000]:  # Limit per category
-                content = self.read_file(filepath)
-                if len(content) > 100:
-                    all_text.append(content)
+        data_items = []
+        for filepath in files:
+            content = self.read_file(filepath)
+            if len(content.strip()) > 100:
+                data_items.append({
+                    "text": content,
+                    "source": str(filepath).split("/")[-2] # Rough category
+                })
         
-        corpus = "\n\n---\n\n".join(all_text)
-        log(f"Total corpus size: {len(corpus):,} characters")
-        
-        return corpus
-    
-    def tokenize(self, text: str) -> np.ndarray:
-        """Tokenize text using tiktoken"""
-        tokens = self.enc.encode(text)
-        return np.array(tokens, dtype=np.uint32)
-    
-    def save_binary(self, tokens: np.ndarray, name: str):
-        """Save tokenized data as binary file (nanoGPT format)"""
-        filepath = self.data_dir / f"{name}.bin"
-        tokens.tofile(filepath)
-        log(f"Saved: {filepath} ({len(tokens):,} tokens)")
-    
-    def prepare(self, train_ratio: float = 0.9):
-        """Full preparation pipeline"""
-        log("=" * 60)
-        log("YACHAQ DATA PREPARATION")
-        log("=" * 60)
-        
-        # Get corpus
-        corpus = self.prepare_corpus()
-        
-        if not corpus:
-            log("ERROR: No data to prepare")
-            return
-        
-        # Tokenize
-        log("Tokenizing corpus...")
-        tokens = self.tokenize(corpus)
-        log(f"Total tokens: {len(tokens):,}")
-        
-        # Split train/val
-        split_idx = int(len(tokens) * train_ratio)
-        train_tokens = tokens[:split_idx]
-        val_tokens = tokens[split_idx:]
-        
-        log(f"Train tokens: {len(train_tokens):,}")
-        log(f"Val tokens: {len(val_tokens):,}")
-        
-        # Save
-        self.save_binary(train_tokens, "train")
-        self.save_binary(val_tokens, "val")
-        
-        # Save metadata
-        meta = {
-            "vocab_size": self.enc.n_vocab,
-            "encoding": ENCODING,
-            "train_tokens": len(train_tokens),
-            "val_tokens": len(val_tokens),
-            "created": datetime.now().isoformat(),
-            "source": "Yachaq LLM EC - Ecuador Public Data"
-        }
-        
-        with open(self.data_dir / "meta.json", 'w') as f:
-            json.dump(meta, f, indent=2)
-        
-        log("=" * 60)
-        log("DATA PREPARATION COMPLETE")
-        log(f"Output: {self.data_dir}")
-        log("=" * 60)
+        log(f"Collected {len(data_items)} valid text items")
+        return data_items
 
+    def save_hf_dataset(self, data_items: List[Dict]):
+        """Save as HuggingFace Dataset (Arrow format)"""
+        if not data_items:
+            log("No data to save!")
+            return
+            
+        dataset = Dataset.from_list(data_items)
+        
+        # Split
+        split_dataset = dataset.train_test_split(test_size=0.1)
+        dataset_dict = DatasetDict({
+            'train': split_dataset['train'],
+            'validation': split_dataset['test']
+        })
+        
+        save_path = self.data_dir / "hf_dataset"
+        dataset_dict.save_to_disk(save_path)
+        log(f"Saved HF Dataset to {save_path}")
+        return save_path
+
+    def upload_to_s3(self, local_path: Path):
+        """Upload prepared data to S3 training prefix"""
+        if not local_path.exists():
+            log(f"Path does not exist: {local_path}")
+            return
+            
+        s3_dest = f"s3://{S3_BUCKET}/{S3_TRAIN_PREFIX}"
+        log(f"Uploading {local_path} to {s3_dest}")
+        
+        subprocess.run([
+            "aws", "s3", "sync",
+            str(local_path),
+            s3_dest,
+            "--delete"
+        ], check=True)
+        log("Upload complete")
+
+    def run(self, format_type: str = "hf", upload: bool = False):
+        log("Starting Data Preparation...")
+        if self.sample_mode:
+            log("Running in SAMPLE MODE (10 files max)")
+            
+        data = self.prepare_dataset()
+        
+        saved_path = None
+        if format_type == "hf":
+            saved_path = self.save_hf_dataset(data)
+        else:
+            log("NanoGPT binary format not fully implemented in this update.")
+        
+        if upload and saved_path:
+            self.upload_to_s3(saved_path)
 
 if __name__ == "__main__":
-    preparer = YachaqDataPreparer()
-    preparer.prepare()
+    parser = argparse.ArgumentParser(description="Yachaq Data Preparation")
+    parser.add_argument("--sample", action="store_true", help="Run with small sample")
+    parser.add_argument("--format", type=str, default="hf", choices=["hf", "bin"], help="Output format")
+    parser.add_argument("--upload", action="store_true", help="Upload to S3")
+    
+    args = parser.parse_args()
+    
+    preparer = YachaqDataPreparer(sample_mode=args.sample)
+    preparer.run(format_type=args.format, upload=args.upload)

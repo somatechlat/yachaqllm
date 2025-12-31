@@ -76,3 +76,13 @@ rag/discovery/out_*
 nanochat/.git
 # Terraform state
 infra/aws/terraform.tfstate
+# Ignore nanoGPT reference
+vendor/nanoGPT/
+
+# Scraped data and temp files
+data/
+*.pdf
+debug_*.png
+*.json
+cookies.txt
+yachaq_access_key
